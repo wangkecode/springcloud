@@ -1,0 +1,75 @@
+﻿<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>签字演示</title>
+    <link rel="stylesheet" type="text/css" href="app/css/index.css"/>
+    <script type="text/javascript" src="app/js/swfobject.js"></script>
+    <script type="text/javascript" src="app/js/web_socket.js"></script>
+    <script type="text/javascript" src="app/js/jquery-1.1.js"></script>
+    <script  src="app/js/index.js"></script>
+    <script type="text/javascript" src="app/js/camera.js"></script>
+</head>
+<body>
+    <div class="header">
+         <p align="center">签字、读取身份证信息演示</p>
+		 <div class="buttonStyle">
+			<button id="readID" onclick="readIDClick()" >读取身份证信息</button>
+			<button id="beginSign" onclick="beginSignClick()" >签字演示</button>
+			<button id="endSign" onclick="getDevice()" >获取设备型号</button>
+			设备型号：<input readonly="readonly" id="DeviceInfo"/>
+			<button id="endSign" onclick="endSignClick()" >结束</button>
+		</div>
+    </div>
+    <div class="div_con">
+       <div style="width:100%">
+			<!-- 身份证信息展示 -->
+			<div class ='idCard'>
+			    <h2 style="letter-spacing: 5px;margin-top:5px;">身份证信息</h2>
+			    <!--<img id="cardaImg" style="margin-top:5px;"/>-->
+			    <img id="cardfImg"/>
+			    <img id="cardbImg"/>
+				<!--<img id="cardhImg"/>-->
+			</div> 
+			<div style="width:210px;float:left;margin-top:-15px;">
+				<p height="15px;">签字展示</p>
+				<img id='signImg' src='' border='1' width="200px" height="100px"/>
+			</div>
+			<div style="width:400px;float:left;margin-top:-15px;">
+				<p height="15px;">base64展示</p>
+				<div id='signBase64' class="imgBase64"></div>
+			</div>
+		</div>
+		
+		<div style="width:100%;margin-top:20px;float:left;">
+			<div id="videoDiv">
+				<button id="cameID" onclick="openCamera();" class="buttonCss">打开摄像头</button>
+				<button id="papersCameID" onclick="papersCame();" class="buttonCss">拍照</button>
+				<button id="screen" onclick="screen();" class="buttonCss">截图</button>
+				<!--<button id="closeCamera" onclick="closeCamera();" class="buttonCss">关闭摄像头</button>-->
+				<img src="app/images/right.png" onclick="RotateLeft();" title="旋转" style="position:absolute;psdding-top:5px;"/><br><br>
+				<input id="papersCamera" name="cameras" type="radio" value="A" checked="checked" onchange="radioChange(this);"/>素材
+				<input id="figureCamera" name="cameras" type="radio" value="B" onchange="radioChange(this);"/>人像  
+				<input id="autoCrop" name="autoCrop" type="checkbox" onchange="autoCropChange(this);"/>auto Crop  
+				<input id="compress" name="compress" type="checkbox" onchange="compressChange(this);"/>压缩
+				<span style="margin-left:20px;">分辨率
+				    <select id="resolution" onchange="resolutionChange();"></select>
+				</span>
+				<button id="imgZoom" onclick="changeZoom(0.9);">缩小</button>
+				<button id="imgZoom" onclick="changeZoom(1.1);">放大</button>
+				<br><br>
+				
+				<div class="cameImag">
+				    <img id="videoImg" style="max-width:640px;max-height:480px;" src="app/images/watingOpenDevice2.jpg"/>
+				</div>
+				<div class="cameImag" style="margin-left:5px;">
+				    <img id="img"  src="app/images/watingOpen2.jpg"/>
+				</div>
+			</div>
+		</div>
+    </div>
+    <div class="footer">
+        Copyright&copy;2020
+    </div>
+</body>
+</html>

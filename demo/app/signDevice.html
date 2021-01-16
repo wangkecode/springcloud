@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>签字演示</title>
+    <link href="css/signDevice.css" rel="stylesheet">
+	<script type="text/javascript" src="js/jquery-1.1.js"></script>
+	<script type="text/javascript" src="js/swfobject.js"></script>
+	<script type="text/javascript" src="js/web_socket.js"></script>
+	<script type="text/javascript">
+		window.onbeforeunload = closeWebSocket;
+		window.onload = webSocket;
+		window.WEB_SOCKET_SWF_LOCATION = "js/WebSocketMain.swf";
+		WEB_SOCKET_DEBUG = true;
+		let ws;
+		// 建立webSocket连接
+		function webSocket() {
+			drawTable(); // 添加页面内容
+			"WebSocket" in window ? ws = new WebSocket("ws://127.0.0.1:8802/sign") : alert("浏览器不支持");
+			//连接成功建立的回调方法
+			ws.onopen = function(event){
+			    console.log("签字页面建立连接");
+				ws.send('{"typeName":"StartSign"}');
+				// 注册按钮信息
+				let buttonInfo = getButtonsInfo();
+				ws.send('{"typeName":"RegisterBtn","message":"'+buttonInfo+'"}');
+			};
+			//接收到消息的回调方法
+			ws.onmessage = function(event){
+				const obj = JSON.parse(event.data);
+				/**let {typeName,message,...other} = obj;*/
+				switch(obj.typeName){
+					case "SignBase64":
+						$("#signImg").attr('src','data:image/png;base64,'+obj.message);
+						break;
+					case "NextPage":
+					    $("#tables").scrollTop($("#tables").scrollTop() + 100);
+						break;
+					case "PrePage":
+					    $("#tables").scrollTop($("#tables").scrollTop() - 100);
+						break;
+					case "BoardHide":
+					    $("#button_cancel").html("签字");
+						break;
+					case "BoardShow":
+					    $("#button_cancel").html("隐藏");
+						break;
+					default:
+					    console.log("非签字页面命令不处理");
+				}
+			};
+
+			//连接关闭的回调方法
+			ws.onclose = function(){
+				alert("close");
+			};
+		};
+		
+		function closeWebSocket(){
+			ws.send('{"typeName":"Close","message":"Sign"}');
+			ws.close();
+		}
+		
+		// 模板字符串
+		function drawTable(){
+			const orderList = [{"id":1,"orderId":"test","orderState":1,"orderDate":"20180628","goodsName":"冰箱哈哈","goodsNum":1001,"payMoney":10000.00},{"id":2,"orderId":"BS0001","orderState":1,"orderDate":"20180629","goodsName":"沙发+床","goodsNum":50,"payMoney":15000.00},{"id":3,"orderId":"BT0002","orderState":1,"orderDate":"20180703","goodsName":"木材板料","goodsNum":100,"payMoney":800.00},{"id":4,"orderId":"BT0003","orderState":1,"orderDate":"20180704","goodsName":"热带水果芒果","goodsNum":60,"payMoney":989.01},{"id":2,"orderId":"BS0001","orderState":1,"orderDate":"20180629","goodsName":"沙发+床","goodsNum":50,"payMoney":15000.00},{"id":3,"orderId":"BT0002","orderState":1,"orderDate":"20180703","goodsName":"木材板料","goodsNum":100,"payMoney":800.00},{"id":4,"orderId":"BT0003","orderState":1,"orderDate":"20180704","goodsName":"热带水果芒果","goodsNum":60,"payMoney":989.01},{"id":2,"orderId":"BS0001","orderState":1,"orderDate":"20180629","goodsName":"沙发+床","goodsNum":50,"payMoney":15000.00},{"id":3,"orderId":"BT0002","orderState":1,"orderDate":"20180703","goodsName":"木材板料","goodsNum":100,"payMoney":800.00},{"id":4,"orderId":"BT0003","orderState":1,"orderDate":"20180704","goodsName":"热带水果芒果","goodsNum":60,"payMoney":989.01},{"id":2,"orderId":"BS0001","orderState":1,"orderDate":"20180629","goodsName":"沙发+床","goodsNum":50,"payMoney":15000.00},{"id":3,"orderId":"BT0002","orderState":1,"orderDate":"20180703","goodsName":"木材板料","goodsNum":100,"payMoney":800.00},{"id":4,"orderId":"BT0003","orderState":1,"orderDate":"20180704","goodsName":"热带水果芒果","goodsNum":60,"payMoney":989.01}];
+			$("#orderId").text(orderList[1].orderId);
+			$("#orderDate").text(orderList[1].orderDate);
+			// 动态写表
+			let html = '<table border="1" id="tableId" style="border-collapse: collapse;border-color: #eaebec;border-width: 1px; width: 100%;"><tbody>';
+			
+			for(let i=0;i<orderList.length;i++){
+				let ds="";
+				let nn=i%2;
+				if(nn!=0){
+					ds="tdc1";
+				}
+				
+				html+="<tr class='"+ds+"'><td>货物名称</td>";
+				html += "<td>"+orderList[i].goodsName+"</td><td>件数</td>";
+				html += "<td>" + orderList[i].goodsNum + "</td><td>代收货款</td>";
+				html += "<td  colspan='3'>" + orderList[i].payMoney + "</td></tr>";
+			}
+			html += '<tr><td rowspan="4">托运须知</td>';
+			html += '<td rowspan="4" colspan="4"><li>1.&nbsp;注明收货地址</li><li>2.&nbsp;标清收货人姓名和电话</li><li>3.&nbsp;托运有风险，建议保价运输</li></td>';
+			html += '<tr><td  rowspan="1" colspan="3">收货客户签字</td></tr>';
+			html += '<tr><td rowspan="3" colspan="3">';
+			html += '<img id="signImg" style="width: 100%;"></img>';
+			html += '</td></tr></tr></tbody></table><div id="tables" style="height:30px;"></div>';
+			$("#tables").html(html);
+		};
+		
+		/** 
+		* 获取签字区域和按钮区域  该方法返回主屏中控件需要用到的btnInfo 值
+		*/	
+		function getButtonsInfo(){
+			const button_up = document.getElementById("button_up").getBoundingClientRect();
+			const button_down = document.getElementById("button_down").getBoundingClientRect();
+			const button_cancel = document.getElementById("button_cancel").getBoundingClientRect();
+			
+			const upInfo = getButRect("200", button_up);
+			const downInfo = getButRect("201", button_down);
+			const cancelInfo = getButRect("100", button_cancel);
+
+			console.log(upInfo+downInfo+cancelInfo);  
+			return upInfo+downInfo+cancelInfo;
+		};
+		function getButRect(rectName,dom){
+			let rectInfo;
+			rectInfo = dom.top;
+			rectInfo += '@' + dom.left;
+			rectInfo += '@' + dom.bottom;
+			rectInfo += '@' + dom.right;
+			rectInfo += '@' + rectName;
+			return rectInfo + '@';	
+		};
+	</script>
+</head>
+<body>
+<div class="pagemain">
+	<div id="button_up" class="page_up" type="button" value="pageUp" onclick="pageUp()">上一页</div>
+	<div id="button_down" class="page_down" type="button" value="pageDown" onclick="pageDown()">下一页</div>
+	<div id="button_cancel" class="page_cancel" type="button" value="CANCEL">隐藏</div>
+</div>
+<div id="orderInfo">
+    <h2 style="text-align: center">签字演示</h2>
+    <span>货号：<span id="orderId"></span></span>
+	<text style="font-size:24px;font-weight:600;color:red;margin-left:50px;">预览确认无误后再签字</text>
+    <span style="position: absolute; right:0px;">日期：<span id="orderDate"></span></span>
+    <div id="tables" class="tables"></div>
+</div>
+</body>
+</html>

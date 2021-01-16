@@ -1,0 +1,1826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript" src="./js/vue.js"></script> <!--在上-->
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/myself.css">
+	<link rel="stylesheet" href="./css/detail.css">
+    <script type="text/javascript" src="./js/index.js"></script>
+	<script type="text/javascript" src="./js/common.js"></script>
+	<script type="text/javascript" src="./js/myself.js"></script>
+	<script type="text/javascript" src="./js/jquery-2.0.3.min.js"></script>
+	<script type="text/javascript" src="./dict/DcDict.js"></script>
+	<script type="text/javascript" src="./js/axios.js"></script>
+</head>
+<body>
+<span id= "test"></span>
+<div>
+    <div id="forms">
+      <div class="forms">
+        <el-container>
+          <el-main>
+            <el-form v-model="veterans" label-width="40%">
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="采集单位">
+                    <span>{{ veterans.F1_5_4 }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item label="采集人">
+                    <span>{{ veterans.F1_5_2 }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="采集人电话">
+                    <span>{{ veterans.F1_5_3 }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item label="采集日期">
+                    <span>{{ veterans.F1_5_5 }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+            </el-form>
+          </el-main>
+        </el-container>
+      </div>
+
+      <div>
+        <div class="g-form-title">基本信息</div>
+        <el-container>
+          <el-aside width="20%">
+            <div style="padding-left:30%;padding-top:30%;">
+
+                <img :src="veterans.F1_9_1" :onerror="defaultImg" width="120px" height="160px" />
+        
+            </div>
+          </el-aside>
+          <el-main>
+            <el-form v-model="veterans" label-width="40%">
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item label="所属街道">
+                    <span>{{ veterans.F1_5_10_1 }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item label="姓名">
+                    <span>{{ veterans.F1_1 }}</span>
+                  </el-form-item>
+                </el-col>
+                </el-row
+              >
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item label="曾用名">
+                    <span>{{ veterans.PREVIOUS_NAME }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item label="身份证号码">
+                    <span>{{ veterans.F1_5 }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item label="性别">
+                    <span>{{ veterans.F1_2 | dictFitlter(this.dicts.UMC_XB) }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item label="民族">
+                    <span>{{ veterans.F1_3 | dictFitlter(this.dicts.UMC_MZ) }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item label="出生日期">
+                    <span>{{ veterans.F1_4 }}</span>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="12">
+                  <el-form-item label="是否港澳籍居民">
+                    <span>{{ veterans.F2_3_1 }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item label="签发机关">
+                    <span>{{ veterans.F1_7 }}</span>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="12">
+                  <el-form-item label="QQ或微信">
+                    <span>{{ veterans.F1_2_14 }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item label="有效期开始">
+                    <span>{{ veterans.F1_8 }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item label="有效期结束">
+                    <span>{{ veterans.F1_8_1 }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item label="政治面貌">
+                    <span>{{ veterans.F1_2_1 | dictFitlter(this.dicts.UMC_ZZMM) }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item label="文化程度">
+                    <span>{{ veterans.F1_2_2 | dictFitlter(this.dicts.UMC_WHCD) }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item label="户籍类别">
+                    <span>{{ veterans.F1_2_4 | dictFitlter(this.dicts.UMC_HJLB) }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item label="婚姻状况">
+                    <span>{{ veterans.F1_2_9 | dictFitlter(this.dicts.UMC_HYZK) }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="24">
+                  <el-form-item label="户籍地" label-width="20%">
+                    <span>{{ veterans.F1_6 }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="24">
+                  <el-form-item label="家庭住址" label-width="20%">
+                    <span>{{ veterans.F1_2_3_2 }} {{ veterans.F1_2_3 }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item label="手机号码">
+                    <span>{{ veterans.F1_2_13 }}</span>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="12">
+                  <el-form-item label="固定电话">
+                    <span>{{ veterans.F1_2_12 }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row>
+                <el-col :span="24">
+                  <el-form-item label="备注" label-width="20%">
+                    <span>{{ veterans.F1_10 }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+            </el-form>
+          </el-main>
+        </el-container>
+      </div>
+
+      <div>
+        <div class="g-form-title">基本信息-图片资料</div>
+        <div class="detail-photo">
+          <div id="msgDataPhoto" style="white-space:nowrap">
+            <div class="detail-tpzl" v-for="item in msgData" :key="item.src">
+              <img :src="item.src" width="120px" height="160px" v-bind:alt="item.name" /><br />
+              <span>{{ item.name }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div v-show="changejobs || retire || cadre || status || redarmy || demobilize || disability || militia || martyr || sacrifice || illness || members" style="margin-top:10px">
+        <div class="g-form-title">
+          人员类别:<span>{{ type }}</span>
+        </div>
+      </div>
+
+      <div v-show="changejobs">
+        <div class="g-form-title">军队转业干部</div>
+        <el-container>
+          <el-main>
+            <el-form v-model="veterans" label-width="50%">
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="入伍时间">
+                    <span>{{ veterans.F3_1 }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="退役时间">
+                    <span>{{ veterans.F3_2 }}</span>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="8">
+                  <el-form-item label="军龄">
+                    <span>{{ veterans.F3_4 }}年</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="原部队代号">
+                    <span>{{ veterans.F3_5 }}</span>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="8">
+                  <el-form-item label="原职级">
+                    <span>{{ veterans.F2_5 | dictFitlter(this.dicts.UMC_YZJ_JZGB) }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="转业证件号">
+                    <span>{{ veterans.F2_6_2 }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row>
+                <el-col>
+                  <el-form-item label="立功受奖情况" label-width="17%">
+                    <span>{{ veterans.F2_7 | dictFitlters(this.dicts.UMC_LGSJQK) }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="安置日期">
+                    <span>{{ veterans.F2_9 }}</span>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="8">
+                  <el-form-item label="退役安置方式">
+                    <span>{{ veterans.F2_10 | dictFitlter(this.dicts.UMC_TYAZFS_JZGB) }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="24">
+                  <el-form-item label="安置地" label-width="17%">
+                    <span>{{ veterans.F2_11_1 }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row v-show="veterans.F2_10 != '2' && veterans.F2_10 != '3'">
+                <el-col :span="16">
+                  <el-form-item label="安置单位名称" label-width="25%">
+                    <span>{{ veterans.F2_12 }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="安置单位性质">
+                    <span>{{ veterans.F2_13 | dictFitlter(this.dicts.UMC_AZDWLBDM) }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="现就业状态">
+                    <span>{{ veterans.F2_14 | dictFitlter(this.dicts.UMC_JYZTDM) }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+            </el-form>
+          </el-main>
+        </el-container>
+      </div>
+
+      <div v-show="retire">
+        <div class="g-form-title">退役士兵</div>
+        <el-container>
+          <el-main>
+            <el-form v-model="veterans" label-width="50%">
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="入伍时间">
+                    <span>{{ veterans.F3_1 }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="退役时间">
+                    <span>{{ veterans.F3_2 }}</span>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="8">
+                  <el-form-item label="军龄">
+                    <span>{{ veterans.F3_4 }}年</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="原部队代号">
+                    <span>{{ veterans.F3_5 }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="原衔级">
+                    <span>{{ veterans.F3_6 | dictFitlter(this.dicts.UMC_YXJ_TYSB) }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="入伍时户籍性质">
+                    <span>{{ veterans.F3_3 | dictFitlter(this.dicts.UMC_HJLB) }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="退役证件号">
+                    <span>{{ veterans.F2_6_2 }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col>
+                  <el-form-item label="立功受奖情况" label-width="17%">
+                    <span>{{ veterans.F2_7 | dictFitlters(this.dicts.UMC_LGSJQK) }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="退役安置方式">
+                    <span>{{ veterans.F2_10 | dictFitlter(this.dicts.UMC_TYSBTYAZFSDM) }}</span>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="8" v-show="veterans.F2_10 == '1'">
+                  <el-form-item label="安置日期">
+                    <span>{{ veterans.F2_9 }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8" v-show="veterans.F2_10 == '1'">
+                  <el-form-item label="安置地">
+                    <span>{{ veterans.F2_11_1 }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="8" v-show="veterans.F2_10 == '1'">
+                  <el-form-item label="安置单位名称">
+                    <span>{{ veterans.F2_12 }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8" v-show="veterans.F2_10 == '1'">
+                  <el-form-item label="安置单位性质">
+                    <span>{{ veterans.F2_13 | dictFitlter(this.dicts.UMC_AZDWLBDM) }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="现就业状态">
+                    <span>{{ veterans.F2_14 | dictFitlter(this.dicts.UMC_JYZTDM) }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col>
+                  <el-form-item label="参加政府组织教育培训状况" label-width="25%">
+                    <span>{{ veterans.F3_15 | dictFitlter(this.dicts.UMC_CJZFZZDJYPXQK) }}</span>
+                  </el-form-item>
+                </el-col></el-row
+              >
+            </el-form>
+          </el-main>
+        </el-container>
+      </div>
+
+      <div v-show="cadre">
+        <div class="g-form-title">军队离退休干部和退休士官</div>
+        <el-container>
+          <el-main>
+            <el-form v-model="veterans" label-width="50%">
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="军休类别">
+                    <span>{{ veterans.F4_7 | dictFitlter(this.dicts.UMC_JXLBDM) }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="入伍时间">
+                    <span>{{ veterans.F3_1 }}</span>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="8">
+                  <el-form-item label="离退休时间">
+                    <span>{{ veterans.F3_2 }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="离退休证件号">
+                    <span>{{ veterans.F2_6_2 }}</span>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="8">
+                  <el-form-item label="安置日期">
+                    <span>{{ veterans.F2_9 }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="安置单位性质">
+                    <span>{{ veterans.F2_13 | dictFitlter(this.dicts.UMC_AZDWXZDM) }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="安置单位名称">
+                    <span>{{ veterans.F2_12 }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="16">
+                  <el-form-item label="安置地" label-width="25%">
+                    <span>{{ veterans.F2_11_1 }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row>
+                <el-col>
+                  <el-form-item label="服务管理机构名称" label-width="17%">
+                    <span>{{ veterans.F4_5 }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+            </el-form>
+          </el-main>
+        </el-container>
+      </div>
+
+      <div v-show="status">
+        <div class="g-form-title">军队无军籍退休退职职工</div>
+        <el-container>
+          <el-main>
+            <el-form v-model="veterans" label-width="60%">
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="参加工作或入伍时间">
+                    <span>{{ veterans.F3_1 }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="成为军队职工方式">
+                    <span>{{ veterans.F5_2 | dictFitlter(this.dicts.UMC_CWJDZGFSDM) }}</span>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="8">
+                  <el-form-item label="离退休时间">
+                    <span>{{ veterans.F3_2 }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="原单位">
+                    <span>{{ veterans.F5_4 }}</span>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="8" v-show="ifOriginalPostA">
+                  <el-form-item label="原职级">
+                    <span>{{ veterans.F2_5 | dictFitlter(this.dicts.UMC_YZJ_WJJA) }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8" v-show="ifOriginalPostB">
+                  <el-form-item label="原职级">
+                    <span>{{ veterans.F2_5 | dictFitlter(this.dicts.UMC_YZJ_WJJB) }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="离退休证件号">
+                    <span>{{ veterans.F2_6_2 }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="24">
+                  <el-form-item label="获得荣誉称号情况" label-width="20%">
+                    <span>{{ veterans.F2_7 | dictFitlters(this.dicts.UMC_HDRYCHQK_WJJ) }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="是否伤残">
+                    <span>{{ veterans.F5_9 | dictFitlter(this.dicts.UMC_SFSC) }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8" v-show="veterans.F5_9 === '1'">
+                  <el-form-item label="伤残等级">
+                    <span>{{ veterans.F5_10 | dictFitlter(this.dicts.UMC_CJDJ) }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="安置计划批次">
+                    <span>{{ veterans.F5_11 | dictFitlter(this.dicts.UMC_YJSJDDM) }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="16">
+                  <el-form-item label="安置地" label-width="30%">
+                    <span>{{ veterans.F2_11_1 }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="接收年月">
+                    <span>{{ veterans.F5_13 }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="个人月均离退休金总额">
+                    <span>{{ veterans.F5_14 }}元</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="安置单位性质">
+                    <span>{{ veterans.F2_13 | dictFitlter(this.dicts.UMC_AZDWXZDMWJJ) }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="家庭购买房改住房情况">
+                    <span>{{ veterans.F5_15 | dictFitlter(this.dicts.UMC_JTGMFGZFQK) }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="所购房改住房性质">
+                    <span>{{ veterans.F5_16 | dictFitlter(this.dicts.UMC_SGFGZFXZDM) }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8" v-if="veterans.F5_16 != '10'">
+                  <el-form-item label="房改住房购房主体">
+                    <span>{{ veterans.F5_17 | dictFitlter(this.dicts.UMC_FGZFGFZT) }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row>
+                <el-col :span="8" v-if="veterans.F5_16 != '10'">
+                  <el-form-item label="所购房改住房建筑面积">
+                    <span>{{ veterans.F5_19 }}平方米</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="16" v-if="veterans.F5_16 != '10'">
+                  <el-form-item label="所购房改住房地址" label-width="30%">
+                    <span>{{ veterans.F5_18 }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+            </el-form>
+          </el-main>
+        </el-container>
+      </div>
+
+      <div v-show="redarmy">
+        <div class="g-form-title">退伍红军老战士（含西路军红军老战士和红军失散人员）</div>
+        <el-container>
+          <el-main>
+            <el-form v-model="veterans" label-width="50%">
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="参加革命时间">
+                    <span>{{ veterans.F3_1 }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="退伍（离退休）时间">
+                    <span>{{ veterans.F3_2 }}</span>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="8">
+                  <el-form-item label="原单位">
+                    <span>{{ veterans.F5_4 }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="人员类别">
+                    <span>{{ veterans.F6_4 | dictFitlter(this.dicts.UMC_SHRYLBDM) }}</span>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="8">
+                  <el-form-item label="待遇情况">
+                    <span>{{ veterans.F6_5 | dictFitlter(this.dicts.UMC_SHDYQKDM) }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="供养情况">
+                    <span>{{ veterans.F6_6 | dictFitlter(this.dicts.UMC_GYQKDM) }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8" v-show="veterans.F6_6 === '2'">
+                  <el-form-item label="供养单位">
+                    <span>{{ veterans.F6_7 | dictFitlter(this.dicts.UMC_GYDW) }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="孤老情况">
+                    <span>{{ veterans.F6_8 | dictFitlter(this.dicts.UMC_GLQK) }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+            </el-form>
+          </el-main>
+        </el-container>
+      </div>
+
+      <div v-show="demobilize">
+        <div class="g-form-title">复员军人</div>
+        <el-container>
+          <el-main>
+            <el-form v-model="veterans" label-width="50%">
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="入伍时间">
+                    <span>{{ veterans.F3_1 }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="复员时间">
+                    <span>{{ veterans.F3_2 }}</span>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="8">
+                  <el-form-item label="军龄">
+                    <span>{{ veterans.F3_4 }}年</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="原部队代号">
+                    <span>{{ veterans.F3_5 }}</span>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="8">
+                  <el-form-item label="原职级">
+                    <span>{{ veterans.F2_5 | dictFitlter(this.dicts.UMC_YZJ_FYJR) }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="复员证件号">
+                    <span>{{ veterans.F2_6_2 }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col>
+                  <el-form-item label="立功受奖情况" label-width="17%">
+                    <span>{{ veterans.F2_7 | dictFitlters(this.dicts.UMC_LGSJQK) }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="人员类别">
+                    <span>{{ veterans.F7_13 | dictFitlter(this.dicts.UMC_FYJRLBDM) }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row v-show="veterans.F7_13 === '1'">
+                <el-col :span="8">
+                  <el-form-item label="待遇情况">
+                    <span>{{ veterans.F6_5 | dictFitlter(this.dicts.UMC_FYJRDYQKDM) }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="供养情况">
+                    <span>{{ veterans.F6_6 | dictFitlter(this.dicts.UMC_GYQKDM) }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8" v-show="veterans.F6_6 === '2'">
+                  <el-form-item label="供养单位">
+                    <span>{{ veterans.F6_7 | dictFitlter(this.dicts.UMC_GYDW) }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="孤老情况">
+                    <span>{{ veterans.F6_8 | dictFitlter(this.dicts.UMC_GLQK) }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row v-show="veterans.F7_13 === '2'">
+                <el-col :span="8">
+                  <el-form-item label="安置计划年度">
+                    <span>{{ veterans.F7_14 }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="接收年月">
+                    <span>{{ veterans.F5_13 }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="现就业状态">
+                    <span>{{ veterans.F2_14 | dictFitlter(this.dicts.UMC_JYZTDM) }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+            </el-form>
+          </el-main>
+        </el-container>
+      </div>
+
+      <div v-show="disability">
+        <div class="g-form-title">残疾军人</div>
+        <el-container>
+          <el-main>
+            <el-form v-model="veterans" label-width="50%">
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="伤残性质">
+                    <span>{{ veterans.F7_1 | dictFitlter(this.dicts.UMC_CJXZDM) }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="伤残等级">
+                    <span>{{ veterans.F7_2 | dictFitlter(this.dicts.UMC_CJDJ) }}</span>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="8">
+                  <el-form-item label="伤残证件号">
+                    <span>{{ veterans.F8_3_2 }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="评残时间">
+                    <span>{{ veterans.F7_4 }}</span>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="8">
+                  <el-form-item label="是否因精神病评残">
+                    <span>{{ veterans.F7_6 | dictFitlter(this.dicts.UMC_SFYJSBPC) }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="供养情况">
+                    <span>{{ veterans.F6_6 | dictFitlter(this.dicts.UMC_GYQKDM) }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8" v-show="veterans.F6_6 === '2'">
+                  <el-form-item label="供养单位">
+                    <span>{{ veterans.F6_7 | dictFitlter(this.dicts.UMC_GYDW) }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="孤老情况">
+                    <span>{{ veterans.F6_8 | dictFitlter(this.dicts.UMC_GLQK) }}</span>
+                  </el-form-item>
+                </el-col>
+                <!-- <el-col :span="8">
+                  <el-form-item label="现就业状态">
+                    <span>{{ veterans.F2_14 | dictFitlter(this.dicts.UMC_JYZTDM) }}</span>
+                  </el-form-item>
+                </el-col> -->
+              </el-row>
+            </el-form>
+          </el-main>
+        </el-container>
+      </div>
+
+      <div v-show="militia">
+        <div class="g-form-title">伤残民兵民工</div>
+        <el-container>
+          <el-main>
+            <el-form v-model="veterans" label-width="50%">
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="伤残性质">
+                    <span>{{ veterans.F7_1 | dictFitlter(this.dicts.UMC_CJXZDM) }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="伤残等级">
+                    <span>{{ veterans.F7_2 | dictFitlter(this.dicts.UMC_CJDJ) }}</span>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="8">
+                  <el-form-item label="伤残证件号">
+                    <span>{{ veterans.F8_3_2 }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="评残时间">
+                    <span>{{ veterans.F8_4 }}</span>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="16">
+                  <el-form-item label="原服务单位" label-width="25%">
+                    <span>{{ veterans.F5_4 }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="供养情况">
+                    <span>{{ veterans.F6_6 | dictFitlter(this.dicts.UMC_GYQKDM) }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8" v-show="veterans.F6_6 === '2'">
+                  <el-form-item label="供养单位">
+                    <span>{{ veterans.F6_7 | dictFitlter(this.dicts.UMC_GYDW) }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="孤老情况">
+                    <span>{{ veterans.F6_8 | dictFitlter(this.dicts.UMC_GLQK) }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="现就业状态">
+                    <span>{{ veterans.F2_14 | dictFitlter(this.dicts.UMC_JYZTDM) }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+            </el-form>
+          </el-main>
+        </el-container>
+      </div>
+
+      <div v-show="martyr">
+        <div class="g-form-title">烈士遗属</div>
+        <el-container>
+          <el-main>
+            <el-form v-model="veterans" label-width="50%">
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="与烈士关系">
+                    <span>{{ veterans.F9_1 | dictFitlter(this.dicts.UMC_YJRGX) }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="是否持证人">
+                    <span>{{ veterans.F9_2 | dictFitlter(this.dicts.UMC_SF) }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="优抚待遇情况">
+                    <span>{{ veterans.F9_6 | dictFitlter(this.dicts.UMC_YFDYQK_LSYS) }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="烈士证明书编号">
+                    <span>{{ veterans.F9_3 }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="供养情况">
+                    <span>{{ veterans.F6_6 | dictFitlter(this.dicts.UMC_GYQKDM) }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8" v-show="veterans.F6_6 === '2'">
+                  <el-form-item label="供养单位">
+                    <span>{{ veterans.F6_7 | dictFitlter(this.dicts.UMC_GYDW) }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="孤老情况">
+                    <span>{{ veterans.F6_8 | dictFitlter(this.dicts.UMC_GLQK) }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="孤儿情况">
+                    <span>{{ veterans.F9_7 | dictFitlter(this.dicts.UMC_GEQK) }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="现就业状态">
+                    <span>{{ veterans.F2_14 | dictFitlter(this.dicts.UMC_JYZTDM) }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <div class="g-form-title-lieshi">烈士基本信息</div>
+
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="姓名">
+                    <span>{{ veterans.F9_12 }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="性别">
+                    <span>{{ veterans.F9_13 | dictFitlter(this.dicts.UMC_XB) }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="出生日期">
+                    <span>{{ veterans.F9_14 }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="入伍(工作)日期">
+                    <span>{{ veterans.F9_15 }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="烈士生前单位">
+                    <span>{{ veterans.F9_16 }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="牺牲日期">
+                    <span>{{ veterans.F9_17 }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="评定烈士单位">
+                    <span>{{ veterans.F9_22 }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="评定烈士时间">
+                    <span>{{ veterans.F9_18 }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="烈士安葬地">
+                    <span>{{ veterans.F9_19 | dictFitlter(this.dicts.UMC_LSAZDDM) }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8" v-show="veterans.F9_19 === '2'">
+                  <el-form-item label="安葬国家">
+                    <span>{{ veterans.F9_23 }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="16" v-show="veterans.F9_19 !== '3'">
+                  <el-form-item label="安葬详细地址" label-width="25%">
+                    <span>{{ veterans.F9_21_1 }}{{ veterans.F9_20 }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+            </el-form>
+          </el-main>
+        </el-container>
+      </div>
+
+      <div v-show="sacrifice">
+        <div class="g-form-title">因公牺牲军人遗属</div>
+        <el-container>
+          <el-main>
+            <el-form v-model="veterans" label-width="70%">
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="与因公牺牲军人关系">
+                    <span>{{ veterans.F10_1 | dictFitlter(this.dicts.UMC_YJRGX) }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="是否持证人">
+                    <span>{{ veterans.F10_2 | dictFitlter(this.dicts.UMC_SF) }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="因公牺牲军人证明书编号">
+                    <span>{{ veterans.F10_3 }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="16">
+                  <el-form-item label="优抚待遇情况" label-width="35%">
+                    <span>{{ veterans.F10_5 | dictFitlter(this.dicts.UMC_YFDYQK_LSYS) }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="供养情况">
+                    <span>{{ veterans.F6_6 | dictFitlter(this.dicts.UMC_GYQKDM) }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8" v-show="veterans.F6_6 === '2'">
+                  <el-form-item label="供养单位">
+                    <span>{{ veterans.F6_7 | dictFitlter(this.dicts.UMC_GYDW) }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="孤老情况">
+                    <span>{{ veterans.F6_8 | dictFitlter(this.dicts.UMC_GLQK) }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="孤儿情况">
+                    <span>{{ veterans.F9_7 | dictFitlter(this.dicts.UMC_GEQK) }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="现就业状态">
+                    <span>{{ veterans.F2_14 | dictFitlter(this.dicts.UMC_JYZTDM) }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <div class="g-form-title-lieshi">因公牺牲军人基本信息</div>
+
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="姓名">
+                    <span>{{ veterans.F10_12 }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="性别">
+                    <span>{{ veterans.F10_13 | dictFitlter(this.dicts.UMC_XB) }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="出生日期">
+                    <span>{{ veterans.F10_14 }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="入伍(工作)日期">
+                    <span>{{ veterans.F10_15 }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="16">
+                  <el-form-item label="生前单位" label-width="35%">
+                    <span>{{ veterans.F10_16 }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="死亡日期">
+                    <span>{{ veterans.F10_17 }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="认定因公牺牲时间">
+                    <span>{{ veterans.F10_18 }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+            </el-form>
+          </el-main>
+        </el-container>
+      </div>
+
+      <div v-show="illness">
+        <div class="g-form-title">病故军人遗属</div>
+        <el-container>
+          <el-main>
+            <el-form v-model="veterans" label-width="70%">
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="与病故军人关系">
+                    <span>{{ veterans.F11_1 | dictFitlter(this.dicts.UMC_YJRGX) }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="是否持证人">
+                    <span>{{ veterans.F11_2 | dictFitlter(this.dicts.UMC_SF) }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="病故军人证明书编号">
+                    <span>{{ veterans.F11_3 }}</span>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="16">
+                  <el-form-item label="优抚待遇情况" label-width="35%">
+                    <span>{{ veterans.F11_5 | dictFitlter(this.dicts.UMC_YFDYQK_LSYS) }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="供养情况">
+                    <span>{{ veterans.F6_6 | dictFitlter(this.dicts.UMC_GYQKDM) }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8" v-show="veterans.F6_6 === '2'">
+                  <el-form-item label="供养单位">
+                    <span>{{ veterans.F6_7 | dictFitlter(this.dicts.UMC_GYDW) }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="孤老情况">
+                    <span>{{ veterans.F6_8 | dictFitlter(this.dicts.UMC_GLQK) }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="孤儿情况">
+                    <span>{{ veterans.F9_7 | dictFitlter(this.dicts.UMC_GEQK) }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="现就业状态">
+                    <span>{{ veterans.F2_14 | dictFitlter(this.dicts.UMC_JYZTDM) }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <div class="g-form-title-lieshi">病故军人基本信息</div>
+
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="姓名">
+                    <span>{{ veterans.F11_11 }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="性别">
+                    <span>{{ veterans.F11_12 | dictFitlter(this.dicts.UMC_XB) }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="出生日期">
+                    <span>{{ veterans.F11_13 }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="入伍(工作)日期">
+                    <span>{{ veterans.F11_14 }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="16">
+                  <el-form-item label="生前单位" label-width="35%">
+                    <span>{{ veterans.F11_15 }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="死亡日期">
+                    <span>{{ veterans.F11_16 }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="认定病故时间">
+                    <span>{{ veterans.F11_17 }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+            </el-form>
+          </el-main>
+        </el-container>
+      </div>
+
+      <div v-show="members">
+        <div class="g-form-title">现役军人家属</div>
+        <el-container>
+          <el-main>
+            <el-form v-model="veterans" label-width="50%">
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="与现役军人关系">
+                    <span>{{ veterans.F12_1 | dictFitlter(this.dicts.UMC_YJRGX) }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8" v-show="veterans.F12_1 === '01' || veterans.F12_1 === '03'">
+                  <el-form-item label="是否随军">
+                    <span>{{ veterans.F12_2 | dictFitlter(this.dicts.UMC_SFSJ) }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="现就业状态">
+                    <span>{{ veterans.F2_14 | dictFitlter(this.dicts.UMC_JYZTDM) }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <div class="g-form-title-lieshi">现役军人基本信息</div>
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="姓名">
+                    <span>{{ veterans.F12_5 }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="性别">
+                    <span>{{ veterans.F12_6 | dictFitlter(this.dicts.UMC_XB) }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="现役军人职级">
+                    <span>{{ veterans.F12_7 | dictFitlter(this.dicts.UMC_XYJRZJ) }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="身份证号">
+                    <span>{{ veterans.F12_8 }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="军队证件号">
+                    <span>{{ veterans.F12_9 }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="入伍时间">
+                    <span>{{ veterans.F12_10 }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+            </el-form>
+          </el-main>
+        </el-container>
+      </div>
+      <div v-show="changejobs || retire || cadre || status || redarmy || demobilize || disability || militia || martyr || sacrifice || illness || members">
+        <div class="g-form-title">类别信息-图片资料</div>
+        <div class="detail-photo">
+          <div id="typeDataPhoto" style="white-space:nowrap">
+            <div class="detail-tpzl" v-for="item in typeData" :key="item.src">
+              <img :src="item.src" width="120px" height="160px" v-bind:alt="item.name" /><br />
+              <span>{{ item.name }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div v-show="changejobs || retire || cadre || redarmy || demobilize || disability || martyr || sacrifice || illness || members">
+        <div class="g-form-title">悬挂光荣牌状况</div>
+        <el-container>
+          <el-main>
+            <el-form v-model="veterans" label-width="60%">
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="光荣牌是否发放">
+                    <span> {{ veterans.F2_15 | dictFitlter(this.dicts.UMC_GRPSFFF) }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="申请发放时间">
+                    <span> {{ veterans.F2_16 }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="光荣牌发放时间">
+                    <span> {{ veterans.F2_17 }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+            </el-form>
+          </el-main>
+        </el-container>
+      </div>
+
+      <div>
+        <div class="g-form-title">生活状况</div>
+        <el-container>
+          <el-main>
+            <el-form v-model="veterans" label-width="70%">
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item
+                    label="个人年收入(元)
+                (包括退休金、养老金等)"
+                  >
+                    <span>{{ veterans.F1_3_3 | dictFitlter(this.dicts.UMC_GRNSR) }}元</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item label="住房公积金">
+                    <span>{{ veterans.F1_3_7 | dictFitlter(this.dicts.UMC_ZFGJJ) }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row v-if="veterans.F2_14 == '1' || veterans.F2_14 == '5' || veterans.F2_14 == '6' || veterans.F2_14 == '7'">
+                <el-col :span="12">
+                  <el-form-item label="现工作单位（含离退休前单位）">
+                    <span>{{ veterans.F1_3_1 }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item label="现单位性质（含离退休前单位）">
+                    <span>{{ veterans.F1_3_2 | dictFitlter(this.dicts.UMC_XDWXZ) }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row v-if="veterans.F2_14 == '2'">
+                <el-col :span="12">
+                  <el-form-item label="下岗时单位">
+                    <span>{{ veterans.F1_3_1 }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item label="下岗时单位性质">
+                    <span>{{ veterans.F1_3_2 | dictFitlter(this.dicts.UMC_XDWXZ) }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item label="享受残疾人两项补贴">
+                    <span>{{ veterans.F1_3_12 | dictFitlter(this.dicts.UMC_XSCJRLXBTQK) }}</span>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="12">
+                  <el-form-item label="享受国家抚恤补助金情况">
+                    <span>{{ veterans.F1_3_11 | dictFitlter(this.dicts.UMC_XSGJFXBZJQK) }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item label="养老保险">
+                    <span>{{ veterans.F1_3_6 | dictFitlter(this.dicts.UMC_YANGLAOBX) }}</span>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="12">
+                  <el-form-item label="医疗保险">
+                    <span>{{ veterans.F1_3_5 | dictFitlter(this.dicts.UMC_YILIAOBX) }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item label="住房状况">
+                    <span>{{ veterans.F1_3_8 | dictFitlter(this.dicts.UMC_ZFQKDM) }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row v-if="veterans.F1_3_8 != '1'">
+                <el-col :span="12">
+                  <el-form-item label="间数">
+                    <span>{{ veterans.F1_3_9 }}间</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item label="面积">
+                    <span>{{ veterans.F1_3_13 }}㎡</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item label="社会救助状况">
+                    <span>{{ veterans.F1_3_10 | dictFitlters(this.dicts.UMC_SHJZZK) }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+            </el-form>
+          </el-main>
+        </el-container>
+      </div>
+      <div>
+        <div class="g-form-title">其他情况</div>
+        <el-container>
+          <el-main>
+            <el-form v-model="veterans" label-width="30%">
+              <el-row>
+                <el-col :span="24">
+                  <el-form-item label="主要困难">
+                    <span>{{ veterans.F1_4_1 | dictFitlters(this.dicts.UMC_ZYKN) }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="24">
+                  <el-form-item label="主要诉求">
+                    <span>{{ veterans.F1_4_2 | dictFitlters(this.dicts.UMC_ZYSQ) }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="24">
+                  <el-form-item label="具体诉求">
+                    <span>{{ veterans.F1_4_3 }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+            </el-form>
+          </el-main>
+        </el-container>
+      </div>
+
+      <div>
+        <el-container>
+          <el-main>
+            <el-form v-model="veterans">
+              <el-row>
+                <el-col :span="24">
+                  <el-form-item label="签名" label-width="80%">
+     
+                      <img :src="veterans.F1_5_1" :onerror="defaultImg" width="120px" height="160px" />
+               
+                  </el-form-item>
+                </el-col>
+              </el-row>
+            </el-form>
+          </el-main>
+        </el-container>
+      </div>
+    </div>
+	</div>
+	<!-- 签字控件依赖按钮  -->
+	<div class="pagemain">
+		<div id="button_up" class="page_up" type="button" value="pageUp" onclick="pageUp()">上一页</div>
+		<div id="button_down" class="page_down" type="button" value="pageDown" onclick="pageDown()">下一页</div>
+		<div id="button_cancel" class="page_cancel" type="button" value="CANCEL">隐藏</div>
+	</div>
+</body>
+
+
+ <script type="text/javascript">
+
+new Vue({
+  el: '#forms',
+  data(){
+    return {
+	  defaultImg:'',
+      type: '',
+      typeData: [],
+      msgData: [],
+      dicts: {
+        UMC_XB: [], //性别
+        UMC_MZ: [], //民族
+        UMC_ZZMM: [], //政治面貌
+        UMC_WHCD: [], //文化程度
+        UMC_HJLB: [], //户籍类别
+        UMC_HYZK: [], //婚姻状况
+        UMC_XDWXZ: [], // 现单位性质
+        UMC_GRNSR: [], // 个人年收入（单位：元）
+        UMC_YILIAOBX: [], // 医疗保险
+        UMC_YANGLAOBX: [], // 养老保险
+        UMC_ZFGJJ: [], // 住房公积金
+        UMC_ZFQKDM: [], // 住房状况
+        UMC_SHJZZK: [], // 社会救助状况
+        UMC_XSGJFXBZJQK: [], // 享受国家抚恤补助金情况
+        UMC_XSCJRLXBTQK: [], // 享受残疾人两项补贴情况
+        UMC_ZYKN: [], // 主要困难
+        UMC_ZYSQ: [], // 主要诉求
+        UMC_GRPSFFF: [], //光荣牌是否发放
+        UMC_YZJ_JZGB: [], //原职级
+        UMC_YZJ_FYJR: [], //原职级
+        UMC_YXJ_TYSB: [], // 原衔级
+        UMC_YZJ_WJJB: [], //		原职级
+        UMC_YZJ_WJJA: [], //		原职级
+        UMC_TYAZFS_JZGB: [], //退役安置方式
+        UMC_TYSBTYAZFSDM: [], // 退役安置方式 退役士兵
+        UMC_SHRYLBDM: [], //	红人员类别
+        UMC_FYJRLBDM: [], //	人员类别
+        UMC_SHDYQKDM: [], //	待遇情况三红
+        UMC_FYJRDYQKDM: [], //复员军人待遇情况代码
+        UMC_YFDYQK_LSYS: [], //优抚待遇情况
+        UMC_LGSJQK: [], //立功受奖情况
+        UMC_HDRYCHQK_WJJ: [], //获得荣誉称号情况
+        UMC_JYZTDM: [], // 现就业状态
+        UMC_JXLBDM: [], //	军休类别
+        UMC_CWJDZGFSDM: [], //	成为军队职工方式
+        UMC_SFSC: [], //	是否伤残
+        UMC_CJDJ: [], //伤残等级
+        UMC_CJXZDM: [], //	伤残性质
+        UMC_SFYJSBPC: [], //是否因精神病评残
+        UMC_AZDWLBDM: [], //安置单位性质
+        UMC_AZDWXZDM: [], //安置单位性质（离退休干部和士官）
+        UMC_YJSJDDM: [], //	安置计划批次
+        UMC_JTGMFGZFQK: [], //	家庭购买房改住房情况
+        UMC_SGFGZFXZDM: [], //	所购房改住房性质
+        UMC_FGZFGFZT: [], //	房改住房购房主体
+        UMC_AZDWXZDMWJJ: [], //	安置单位性质
+        UMC_GYQKDM: [], //	供养情况
+        UMC_GYDW: [], //	供养单位
+        UMC_GLQK: [], //	孤老情况
+        UMC_GEQK: [], //孤儿情况
+        UMC_YJRGX: [], //与军人关系
+        UMC_SF: [], //是否持证人
+        UMC_LSAZDDM: [], //烈士安葬地
+        UMC_CJZFZZDJYPXQK: [], //参加政府组织教育培训状况
+        UMC_XYJRZJ: [], //现役军人职级
+        UMC_SFSJ: [], //是否随军
+        UMC_RYZLBS: [] //减员情况
+      },
+      veterans: {},
+      ifOriginalPostA: false,
+      ifOriginalPostB: false,
+      changejobs: false,
+      retire: false,
+      cadre: false,
+      status: false,
+      redarmy: false,
+      demobilize: false,
+      disability: false,
+      militia: false,
+      martyr: false,
+      sacrifice: false,
+      illness: false,
+      members: false,
+      viewer1: '',
+      viewer2: '',
+	  fastdfsUrl: 'http://10.221.2.93:7899/', //fastdfs服务器
+	 
+    };
+  },
+  filters: {
+    dictFitlter: (value, dictArray) => {
+      return selectDictLabel(dictArray, value);
+    },
+    dictFitlters: (value, dictArray) => {
+      return selectDictLabels(dictArray, value);
+    }
+  },
+  created() {
+    this.getDicts();
+	this.getData();
+	
+  },
+  
+   methods: {
+    init() {
+      this.initData(data);
+      this.initPhoto();
+    },
+	getData(){
+	  let href=document.location.href.toString();
+	  let F1_5 =href.substring(href.indexOf('=')+1,href.length);
+	   //alert(F1_5);
+	  let url ="http://10.110.60.52/data-collection/veterans/getMessageFromRedisForSign/"+F1_5
+	axios({
+      method: 'get',
+      url: url,
+	  changeOrigin:true,
+	  crossDomain: true,
+	  'Access-Control-Allow-Origin' : '*',
+	  'Access-Control-Allow-Headers': 'X-Requested-With,Content-Type',
+    }).then(res =>{ 
+	    console.log(res);
+		this.initData(res.data);
+	}).catch(error =>{
+	    console.log(error);
+	})
+	},
+    initData(data) {
+      if ('81' === data.data.F2_3_1) {
+        data.data.F2_3_1 = '香港';
+      } else if ('82' === data.data.F2_3_1) {
+        data.data.F2_3_1 = '澳门';
+      } else if ('1' === data.data.F2_3) {
+        data.data.F2_3_1 = '是';
+      } else {
+        data.data.F2_3_1 = '否';
+      }
+      if (data.data.F3_2 !== null && data.data.F3_2 !== '') {
+        let retireTime = new Date(data.data.F3_2.replace(/^(\d{4})(\d{2})(\d{2})$/, '$1-$2-$3'));
+        let data2006 = new Date('2006-06-30');
+        if (data2006 > retireTime || data2006 == retireTime) {
+          this.ifOriginalPostB = true;
+        } else if (data2006 < retireTime) {
+          this.ifOriginalPostA = true;
+        }
+      }
+      let arr = new Array();
+      if (data.data.F1 === '1100') {
+        arr.push('军队转业干部');
+        this.changejobs = true;
+      } else if (data.data.F1 === '1200') {
+        arr.push('退役士兵');
+        this.retire = true;
+      } else if (data.data.F1 === '1300') {
+        arr.push('军队离退休干部和退休士官');
+        this.cadre = true;
+      } else if (data.data.F1 === '1400') {
+        arr.push('军队无军籍退休退职职工');
+        this.status = true;
+      } else if (data.data.F1 === '0300') {
+        arr.push('退伍红军老战士');
+        this.redarmy = true;
+      } else if (data.data.F1 === '0400') {
+        arr.push('复员军人');
+        this.demobilize = true;
+      }
+      if (data.data.F2 === '0101') {
+        arr.push('残疾军人');
+        this.disability = true;
+      } else if (data.data.F2 === '0104') {
+        arr.push('伤残民兵民工');
+        this.militia = true;
+      }
+      if (data.data.F3 === '0201') {
+        arr.push('烈士遗属');
+        this.martyr = true;
+      }
+      if (data.data.F5 === '0202') {
+        arr.push('因公牺牲军人遗属');
+        this.sacrifice = true;
+      }
+      if (data.data.F6 === '0203') {
+        arr.push('病故军人遗属');
+        this.illness = true;
+      }
+      if (data.data.F4 === '0204') {
+        arr.push('现役军人家属');
+        this.members = true;
+      }
+      this.type = arr.toString();
+      this.veterans = data.data;
+	  this.initPhoto();
+    },
+    initPhoto() {
+      this.veterans.F1_9_1 = this.fastdfsUrl + this.veterans.F1_9_1;
+      this.veterans.F1_5_1 = this.fastdfsUrl + this.veterans.F1_5_1;
+      this.typeData = [];
+      this.msgData = [];
+      getPhoto(this.veterans.F1_9_2, '身份证正反面', this.msgData);
+      getPhoto(this.veterans.F1_2_5_1, '户口本首页', this.msgData);
+      getPhoto(this.veterans.F1_2_6_1, '户口本户主页', this.msgData);
+      getPhoto(this.veterans.F1_2_7_1, '户口本本人页', this.msgData);
+      getPhoto(this.veterans.F1_2_8_1, '近期照片', this.msgData);
+      if (this.veterans.F1 === '1100') {
+        getPhoto(this.veterans.F2_6_1, '转业证件', this.typeData);
+        getPhoto(this.veterans.F2_6_3, '转业证明材料', this.typeData);
+        getPhoto(this.veterans.F2_6_4, '个人声明材料', this.typeData);
+        getPhoto(this.veterans.F2_8_1, '八一勋章', this.typeData);
+        getPhoto(this.veterans.F2_8_2, '大军区以上荣誉称号', this.typeData);
+        getPhoto(this.veterans.F2_8_3, '一等功', this.typeData);
+        getPhoto(this.veterans.F2_8_4, '二等功', this.typeData);
+        getPhoto(this.veterans.F2_8_5, '三等功', this.typeData);
+        getPhoto(this.veterans.F2_8_6, '其他', this.typeData);
+      } else if (this.veterans.F1 === '1200') {
+        getPhoto(this.veterans.F2_6_1, '退役证件', this.typeData);
+        getPhoto(this.veterans.F2_6_3, '退役证明材料', this.typeData);
+        getPhoto(this.veterans.F2_6_4, '个人声明材料', this.typeData);
+        getPhoto(this.veterans.F2_8_1, '八一勋章', this.typeData);
+        getPhoto(this.veterans.F2_8_2, '大军区以上荣誉称号', this.typeData);
+        getPhoto(this.veterans.F2_8_3, '一等功', this.typeData);
+        getPhoto(this.veterans.F2_8_4, '二等功', this.typeData);
+        getPhoto(this.veterans.F2_8_5, '三等功', this.typeData);
+        getPhoto(this.veterans.F2_8_6, '全军士官优秀人才奖', this.typeData);
+      } else if (this.veterans.F1 === '1300') {
+        getPhoto(this.veterans.F2_6_1, '离退休证件', this.typeData);
+      } else if (this.veterans.F1 === '1400') {
+        getPhoto(this.veterans.F2_6_1, '离退休证件', this.typeData);
+        getPhoto(this.veterans.F2_8_1, '全国劳动模范', this.typeData);
+        getPhoto(this.veterans.F2_8_2, '全国先进工作者', this.typeData);
+        getPhoto(this.veterans.F2_8_3, '全军职工先进工作者', this.typeData);
+        getPhoto(this.veterans.F2_8_4, '省部级劳动模范', this.typeData);
+        getPhoto(this.veterans.F2_8_5, '省部级先进工作者', this.typeData);
+        getPhoto(this.veterans.F2_8_6, '其他', this.typeData);
+      } else if (this.veterans.F1 === '0300') {
+        getPhoto(this.veterans.F2_6_1, '退伍证件', this.typeData);
+        getPhoto(this.veterans.F2_6_3, '证明材料', this.typeData);
+      } else if (this.veterans.F1 === '0400') {
+        getPhoto(this.veterans.F2_6_1, '复员证件', this.typeData);
+        getPhoto(this.veterans.F2_6_3, '复员证明材料', this.typeData);
+        getPhoto(this.veterans.F2_6_4, '个人声明材料', this.typeData);
+        getPhoto(this.veterans.F2_8_1, '八一勋章', this.typeData);
+        getPhoto(this.veterans.F2_8_2, '大军区以上荣誉称号', this.typeData);
+        getPhoto(this.veterans.F2_8_3, '一等功', this.typeData);
+        getPhoto(this.veterans.F2_8_4, '二等功', this.typeData);
+        getPhoto(this.veterans.F2_8_5, '三等功', this.typeData);
+        getPhoto(this.veterans.F2_8_6, '全军士官优秀人才奖', this.typeData);
+        getPhoto(this.veterans.F7_8_1, '优抚证件', this.typeData);
+        getPhoto(this.veterans.F7_11_1, '离退休证件', this.typeData);
+      }
+      if (this.veterans.F2 === '0101') {
+        getPhoto(this.veterans.F8_3_1, '残疾证件', this.typeData);
+      } else if (this.veterans.F2 === '0104') {
+        getPhoto(this.veterans.F8_3_1, '伤残证件', this.typeData);
+      }
+      if (this.veterans.F3 === '0201') {
+        getPhoto(this.veterans.F9_3_1, '烈士证明书', this.typeData);
+        getPhoto(this.veterans.F9_8, '享受待遇的证件', this.typeData);
+      }
+      if (this.veterans.F5 === '0202') {
+        getPhoto(this.veterans.F10_4_1, '因公牺牲军人证明书', this.typeData);
+        getPhoto(this.veterans.F10_19, '享受待遇的证件', this.typeData);
+      }
+      if (this.veterans.F6 === '0203') {
+        getPhoto(this.veterans.F11_4_1, '病故军人证明书', this.typeData);
+        getPhoto(this.veterans.F11_9_1, '享受待遇的证件', this.typeData);
+      }
+
+    },
+
+
+    getDicts() {
+      this.dicts = DcDict;
+      this.dicts.UMC_AZDWXZDM = [
+        { dictCode: '11', dictValue: '退役军人事务部门管理' },
+        { dictCode: '12', dictValue: '组织部门管理' },
+        { dictCode: '13', dictValue: '人社部门管理' },
+        { dictCode: '21', dictValue: '干休所管理' },
+        { dictCode: '22', dictValue: '等移交政府安置' }
+      ];
+      this.dicts.UMC_TYAZFS_JZGB = [
+        { dictCode: '1', dictValue: '计划分配' },
+        { dictCode: '2', dictValue: '自主择业' },
+        { dictCode: '3', dictValue: '自愿自行就业' },
+        { dictCode: '4', dictValue: '企业军转干部' }
+      ];
+    }
+	},
+
+ })
+ 
+
+</script>
+</html>

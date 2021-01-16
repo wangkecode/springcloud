@@ -1,0 +1,42 @@
+.g-form-title {
+  border-left: 3px solid #2f8cee;
+  padding-left: 10px;
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #000;
+  font-weight: bold;
+}
+
+.detail-photo {
+  margin-left: 20%;
+  border: 1px solid #ccc;
+  width: 70%;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  height: 200px;
+  text-align: center;
+}
+
+.detail-tpzl {
+  display: inline-block;
+  border: 1px solid #c0c0c0;
+  width: 130px;
+  height: 90%;
+  text-align: center;
+}
+.g-form-title-lieshi {
+  /* border-left: 3px solid #2f8cee; */
+  padding-left: 5%;
+  font-size: 15px;
+  margin-bottom: 20px;
+  color: #2f8cee;
+}
+.el-pagination .el-select .el-input .el-input__inner{
+  height: 32px;
+  line-height: 32px;
+  border-radius: 0;
+}
+.el-form-item__label{
+  font-size: 18px;
+  font-weight: bold;
+}

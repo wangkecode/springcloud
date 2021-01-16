@@ -1,0 +1,80 @@
+body{
+   font-family: "Microsoft YaHei";
+   /*background-image: url("../images/img_1.png");
+   background-size:100%;*/
+   background-color:rgba(209, 231, 246, 1);
+}
+*{
+	cursor:none;
+}
+::-webkit-scrollbar {
+    width: 0;   /* 滚动条宽度为0 */
+    height: 0; /* 滚动条高度为0 */
+    display: none; /* 滚动条隐藏 */
+}
+#bg{
+    width:100%;
+}
+
+#orderInfo {
+    margin-left: 15%;
+    margin-top: 5%;
+    width: 70%;
+    position: absolute;
+}
+
+#orderInfo td {
+    width: 12.5%;
+}
+
+.tables {
+	height: 500px;
+	overflow-y: scroll;
+}
+
+#tables tr th {
+    height: 35px;
+}
+
+#tableId td {
+	height:50px;
+}
+
+.tdc1 {
+	background-color:#eaebec;
+}
+
+.pagemain {
+	position:fixed;
+	width:104px;
+	height:160px;
+	right:20px;
+	bottom:380px;
+
+}
+.pagemain div{
+	position:absolute;
+	width:100px;
+	height:40px;
+	margin-right:0px;
+	border:solid 2px #4d4e53;
+	border-radius:10px 10px 10px 10px;
+	text-align: center;  
+	line-height:40px;
+	font-size:20px;		
+	font-weight: 800; 
+	color:#FFFFFF;
+	background-color:#a58fff;
+}
+
+.page_up{		
+	margin-top:0px;
+}
+
+.page_down{		
+	margin-top:60px;
+}
+
+.page_cancel{		
+	margin-top:120px;
+}
